@@ -1,21 +1,14 @@
 const hasCycle = graph => {
-  for (let node in graph)
-    if (detectCycle(graph, node)) return true;
-
-  return false;
-}
-
-const detectCycle = (graph, node) => {
-  const queue = [node];
-  let isFirstLoop = true;
+  const firstLoop = true;
+  const queue = [];
+  for (let node in graph) queue.push([node, node, firstLoop]);
 
   while (queue.length) {
-    const curr = queue.shift();
+    const [curr, node, isFirstLoop] = queue.shift();
     if (curr === node && !isFirstLoop) return true;
-    isFirstLoop = false;
 
     for (let neighbour of graph[curr])
-      queue.push(neighbour);
+      queue.push([neighbour, node, !firstLoop]);
   }
 
   return false;
