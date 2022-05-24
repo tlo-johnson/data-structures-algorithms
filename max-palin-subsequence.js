@@ -1,19 +1,20 @@
-const maxPalinSubsequence = (str, memo = {}) => {
-  if (str.length === 0) return 0;
-  if (str.length === 1) return 1;
-  if (str in memo) return memo[str];
+const maxPalinSubsequence = (str, start = 0, end = str.length - 1, memo = {}) => {
+  if (end < start) return 0;
+  if (end - start === 0) return 1;
 
-  if (str[0] === str[str.length - 1]) {
-    const substring = str.slice(1, -1);
-    memo[str] = maxPalinSubsequence(substring, memo) + 2;
+  const key = `${start},${end}`;
+  if (key in memo) return memo[key];
+
+  if (str[start] === str[end]) {
+    memo[key] = maxPalinSubsequence(str, start + 1, end - 1, memo) + 2;
   } else {
-    memo[str] = Math.max(
-      maxPalinSubsequence(str.slice(1), memo),
-      maxPalinSubsequence(str.slice(0, -1), memo)
+    memo[key] = Math.max(
+      maxPalinSubsequence(str, start + 1, end, memo),
+      maxPalinSubsequence(str, start, end - 1, memo)
     );
   }
 
-  return memo[str];
+  return memo[key];
 };
 
 module.exports = { maxPalinSubsequence };
