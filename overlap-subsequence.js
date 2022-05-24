@@ -17,3 +17,10 @@ const overlapSubsequence = (str1, str2, start1 = 0, start2 = 0, memo = {}) => {
 }
 
 module.exports = { overlapSubsequence };
+
+/*
+ * n = length of str1
+ * m = length of str2
+ * time: O(nm)
+ * space: O(nm)
+ */
